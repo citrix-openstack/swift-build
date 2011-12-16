@@ -232,6 +232,7 @@ fi
 %defattr(-,root,root,-)
 %{_initrddir}/%{name}-object
 %{_bindir}/swift-object-auditor
+%{_bindir}/swift-object-expirer
 %{_bindir}/swift-object-info
 %{_bindir}/swift-object-replicator
 %{_bindir}/swift-object-server
