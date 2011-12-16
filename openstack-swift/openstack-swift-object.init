@@ -1,0 +1,35 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          openstack-swift-object
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Stop:      0 1 6
+# Short-Description: Swift object server
+# Description:       Object server for Swift.
+### END INIT INFO
+
+# openstack-swift-object: Swift object server
+#
+# chkconfig: - 20 80
+# description: Object server for Swift.
+
+name="object"
+
+. /etc/rc.d/init.d/openstack-swift-common.sh
+
+start_() {
+    swift_init "$name-auditor" start &&
+    swift_init "$name-replicator" start &&
+    swift_init "$name-updater" start &&
+    swift_init "$name-server" start
+}
+
+stop_() {
+    swift_init "$name-server" stop
+    swift_init "$name-auditor" stop
+    swift_init "$name-replicator" stop
+    swift_init "$name-updater" stop
+}
+
+handle_args "$1"

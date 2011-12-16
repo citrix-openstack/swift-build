@@ -1,0 +1,21 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          openstack-swift-proxy
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Stop:      0 1 6
+# Short-Description: Swift proxy server
+# Description:       Proxy server for Swift.
+### END INIT INFO
+
+# openstack-swift-proxy: Swift proxy server
+#
+# chkconfig: - 20 80
+# description: Proxy server for Swift.
+
+name="proxy"
+
+. /etc/rc.d/init.d/openstack-swift-common.sh
+
+handle_args "$1"

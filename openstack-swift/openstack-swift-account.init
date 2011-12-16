@@ -1,0 +1,35 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          openstack-swift-account
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Stop:      0 1 6
+# Short-Description: Swift account server
+# Description:       Account server for Swift.
+### END INIT INFO
+
+# openstack-swift-account: Swift account server
+#
+# chkconfig: - 20 80
+# description: Account server for Swift.
+
+name="account"
+
+. /etc/rc.d/init.d/openstack-swift-common.sh
+
+start_() {
+    swift_init "$name-auditor" start &&
+    swift_init "$name-reaper" start &&
+    swift_init "$name-replicator" start &&
+    swift_init "$name-server" start
+}
+
+stop_() {
+    swift_init "$name-server" stop
+    swift_init "$name-auditor" stop
+    swift_init "$name-reaper" stop
+    swift_init "$name-replicator" stop
+}
+
+handle_args "$1"

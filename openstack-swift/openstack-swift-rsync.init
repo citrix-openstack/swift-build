@@ -1,0 +1,44 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          openstack-swift-rsync
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Stop:      0 1 6
+# Short-Description: Swift rsync server
+# Description:       Rsync server for Swift.
+### END INIT INFO
+
+# openstack-swift-rsync: Swift rsync server
+#
+# chkconfig: - 20 80
+# description: Rsync server for Swift.
+
+name="rsync"
+
+. /etc/rc.d/init.d/openstack-swift-common.sh
+
+OPTIONS="--daemon --config /etc/swift/rsync.conf ${OPTIONS-}"
+
+start() {
+    echo -n "Starting $name: "
+    /usr/bin/rsync $OPTIONS
+    retval=$?
+    [ $retval -eq 0 ] && success || failure
+    echo
+    return $retval
+}
+
+stop() {
+    echo -n "Stopping $name: "
+    killproc -p "$pidfile" "/usr/bin/rsync"
+    retval=$?
+    echo
+    return $retval
+}
+
+rh_status() {
+    status -p "$pidfile" "/usr/bin/rsync"
+}
+
+handle_args "$1"
