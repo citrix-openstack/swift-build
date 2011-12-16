@@ -3,21 +3,14 @@ IMPORT_BRANDING := yes
 ifdef B_BASE
 include $(B_BASE)/common.mk
 include $(B_BASE)/rpmbuild.mk
+REPO := /repos/swift-build
+SWIFT_UPSTREAM := /repos/swift
 else
 COMPONENT := swift
 include ../../mk/easy-config.mk
+REPO := .
+SWIFT_UPSTREAM := ../swift
 endif
-
-REPO := $(call hg_loc,$(COMPONENT))
-VPX_REPO := $(call hg_loc,os-vpx)
-
-
-LP_SWIFT_BRANCH ?= lp:swift
-
-
-SWIFT_UPSTREAM := $(shell test -d /repos/swift && \
-			  readlink -f /repos/swift || \
-			  readlink -f $(REPO)/upstream)
 
 
 SWIFT_VERSION := $(shell sed -ne "s,^_version = Version('\(.*\)'.*).*$$,\1,p" \
@@ -104,10 +97,6 @@ $(EPEL_REPOMD_XML): $(wildcard $(EPEL_RPM_DIR)/%)
 	$(call mkdir_clean,$(EPEL_YUM_DIR))
 	cp -s $(EPEL_RPM_DIR)/* $(EPEL_YUM_DIR)
 	createrepo $(EPEL_YUM_DIR)
-
-.PHONY: rebase
-rebase:
-	@sh $(VPX_REPO)/rebase.sh $(LP_SWIFT_BRANCH) $(REPO)/upstream
 
 .PHONY: clean
 clean:
