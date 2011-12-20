@@ -23,7 +23,7 @@ Source15: rsync.conf
 BuildRoot: %{_tmppath}/%{name}
 BuildArch: noarch
 
-Requires: python-pastedeploy, sqlite >= 3.7.4
+Requires: sqlite >= 3.7.4
 Requires(post): chkconfig
 Requires(postun): initscripts
 Requires(preun): chkconfig
