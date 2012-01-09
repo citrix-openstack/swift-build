@@ -197,6 +197,8 @@ fi
 %{_bindir}/swift-drive-audit
 %{_bindir}/swift-get-nodes
 %{_bindir}/swift-init
+%{_bindir}/swift-oldies
+%{_bindir}/swift-orphans
 %{_bindir}/swift-recon
 %{_bindir}/swift-recon-cron
 %{_bindir}/swift-ring-builder
